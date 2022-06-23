@@ -201,23 +201,11 @@ app.get("/user/:userid/cra/:yearmonth", async (req: Request, res: Response) => {
       yearmonth: yearmonth
     }
   });
-  return res.json(cra)
-});
 
-app.get("/user/:userid/cra/:yearmonth/exist", bodyParser.json(), async (req: Request, res: Response) => {
-  const userid = req.params.userid;
-  const yearmonth = req.params.yearmonth;
-  const thisCra = await CRA.findOne({
-    where: {
-      id_users: userid,
-      yearmonth: yearmonth
-    }
-  })
-
-  if (thisCra) {
-    return res.json({isExist: true})
+  if (cra) {
+    return res.json(cra);
   } else {
-    return res.json({isExist: false})
+    return res.status(404).send('no cra');
   }
 });
 
